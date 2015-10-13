@@ -7,15 +7,25 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.markjlehman.twitterclone.R;
+import com.markjlehman.twitterclone.models.Tweet;
 import com.markjlehman.twitterclone.models.User;
 
+import java.util.ArrayList;
 
 public class MainActivity extends Activity {
     private SharedPreferences mPreferences;
     private User mUser;
+    private EditText mTweetText;
+    private Button mSubmitButton;
+    private ArrayList<Tweet> mTweets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +33,36 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         mPreferences = getApplicationContext().getSharedPreferences("twitter", Context.MODE_PRIVATE);
+
         if (!isRegistered()) {
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent);
+        } else {
+            mTweetText = (EditText) findViewById(R.id.newTweetEdit);
+            mSubmitButton = (Button) findViewById(R.id.tweetSubmitButton);
+            mTweets = (ArrayList) Tweet.all();
+
+            mSubmitButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    createTweet();
+                }
+            });
         }
+    }
+
+    private void createTweet() {
+        String content = mTweetText.getText().toString();
+        Tweet newTweet = new Tweet(mUser, content);
+        newTweet.save();
+        mTweets.add(newTweet);
+        mTweetText.setText("");
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
+
     }
 
     private boolean isRegistered() {
