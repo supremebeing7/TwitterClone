@@ -3,6 +3,7 @@ package com.markjlehman.twitterclone.models;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 
 @Table(name = "Users", id = "_id")
 public class User extends Model {
@@ -36,5 +37,9 @@ public class User extends Model {
 
     public User() {
         super();
+    }
+
+    public static User findByEmail(String email) {
+        return new Select().from(User.class).where("Email = ?", email).executeSingle();
     }
 }
