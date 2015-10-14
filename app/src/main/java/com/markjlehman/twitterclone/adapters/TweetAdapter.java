@@ -1,6 +1,7 @@
 package com.markjlehman.twitterclone.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.markjlehman.twitterclone.R;
 import com.markjlehman.twitterclone.models.Tweet;
+import com.markjlehman.twitterclone.ui.TweetActivity;
 
 import java.util.ArrayList;
 

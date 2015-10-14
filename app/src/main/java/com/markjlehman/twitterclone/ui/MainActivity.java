@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,8 @@ import com.markjlehman.twitterclone.models.Tweet;
 import com.markjlehman.twitterclone.models.User;
 
 import java.util.ArrayList;
+
+import javax.sql.RowSetMetaData;
 
 public class MainActivity extends ListActivity {
     public static String TAG = MainActivity.class.getSimpleName();
@@ -95,6 +98,15 @@ public class MainActivity extends ListActivity {
         Toast.makeText(this, "Welcome " + mUser.getmName(), Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        RowData item = (RowData) getListAdapter().getItem(position);
+        String thisTweet = mTweets.get(position);
+        Intent intent = new Intent(this, TweetActivity.class);
+        intent.putExtra("tweetId", thisTweet);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
