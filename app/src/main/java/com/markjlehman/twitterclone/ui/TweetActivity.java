@@ -17,16 +17,17 @@ public class TweetActivity extends Activity {
     public static String TAG = TweetActivity.class.getSimpleName();
 
     private Tweet mTweet;
-    private ArrayAdapter<String> mAdapter;
+    private TextView mTweetContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tweet);
 
-        int tweetId = (int) getIntent().getStringExtra("tweetId");
-        mTweet = Tweet.find(tweetId);
-        Log.d(mTweet);
+        String tweetId = getIntent().getStringExtra("tweetId");
+        mTweet = Tweet.find(Integer.parseInt(tweetId));
+        mTweetContent = (TextView) findViewById(R.id.tweetContent);
+        mTweetContent.setText(mTweet.getmContent());
     }
 
 

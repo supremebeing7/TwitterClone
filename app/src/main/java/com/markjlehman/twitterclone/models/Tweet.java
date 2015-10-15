@@ -21,6 +21,9 @@ public class Tweet extends Model {
     @Column(name = "Content")
     private String mContent;
 
+    @Column(name = "_id")
+    private Long mId;
+
     public Tweet(User mUser, String mContent) {
         super();
         this.mUser = mUser;
@@ -68,5 +71,9 @@ public class Tweet extends Model {
 
     public static Tweet find(int id) {
         return new Select().from(Tweet.class).where("_id = ?", id).executeSingle();
+    }
+
+    public Long getmId() {
+        return mId;
     }
 }

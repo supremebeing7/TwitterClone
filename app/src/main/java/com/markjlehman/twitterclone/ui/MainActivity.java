@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -101,10 +102,10 @@ public class MainActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        RowData item = (RowData) getListAdapter().getItem(position);
-        String thisTweet = mTweets.get(position);
+        Tweet tweet = (Tweet) getListAdapter().getItem(position);
         Intent intent = new Intent(this, TweetActivity.class);
-        intent.putExtra("tweetId", thisTweet);
+        Long tweetId = tweet.getmId();
+        intent.putExtra("tweetId", tweet.getmId().toString());
         startActivity(intent);
     }
 
